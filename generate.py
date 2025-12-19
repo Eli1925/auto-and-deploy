@@ -4,6 +4,14 @@ import random
 import pandas as pd
 import os
 
+script_path = os.path.abspath(__file__)
+print(f"Путь до скрипта: {script_path}")
+
+# Получить директорию, в которой находится скрипт
+script_dir = os.path.dirname(os.path.abspath(__file__))
+print(f"Директория скрипта: {script_dir}")
+
+
 CATEGORIES = ['Бытовая химия', 'Текстиль', 'Кухонная утварь', 'Посуда', 'Средства для уборки', 'Хранение']
 
 ITEMS = {
@@ -23,7 +31,8 @@ def main():
     n_registers_per_shop=2
     n_receipts_per_register=10
 
-    os.makedirs('data', exist_ok=True)
+    data_path = os.path.join(script_dir, 'data')
+    os.makedirs(data_path, exist_ok=True)
 
     for shop_num in range(1, n_shops + 1):
         for cash_num in range(1, n_registers_per_shop + 1):
@@ -56,7 +65,7 @@ def main():
             df = pd.DataFrame(data)
             
             filename = f"{shop_num}_{cash_num}.csv"
-            filepath = os.path.join('data', filename)
+            filepath = os.path.join(data_path, filename)
             df.to_csv(filepath, index=False)
            
            

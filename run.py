@@ -4,19 +4,27 @@ import configparser
 
 from pgdb import PGDatabase
 
+script_path = os.path.abspath(__file__)
+print(f"Путь до скрипта: {script_path}")
+
+# Получить директорию, в которой находится скрипт
+script_dir = os.path.dirname(os.path.abspath(__file__))
+print(f"Директория скрипта: {script_dir}")
+
 config = configparser.ConfigParser()
-config.read('config.ini')
+config.read(os.path.join(script_dir, 'config.ini'))
 
 DATABASE_CREDS = config['Database']
 
 df = pd.DataFrame()
-if os.path.exists('data'):
-    all_files = os.listdir('data')
+data_path = os.path.join(script_dir, 'data')
+if os.path.exists(data_path):
+    all_files = os.listdir(data_path)
     csv_files = [file for file in all_files if file.endswith('.csv')]
     all_dataframes = []
     
     for file in csv_files:
-        file_path = os.path.join('data', file)
+        file_path = os.path.join(data_path, file)
         df = pd.read_csv(file_path)
         os.remove(file_path)
         all_dataframes.append(df)

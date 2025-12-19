@@ -1,0 +1,1 @@
+C:\lisa\automation\venv\Scripts\python.exe C:\lisa\automation\generate.py
